@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Vasya",
+      "email": "vasya@gmail.com",
+      "phone": "12345678",
+      "address": "Mytishy"
+    },
+    {
+      "id": 2,
+      "name": "Petya",
+      "email": "petya@gmail.com",
+      "phone": "232938428763",
+      "address": "Dolgopa"
+    },
+    {
+      "id": 3,
+      "name": "Jenya",
+      "email": "jenya@gmail.com",
+      "phone": "327643489837",
+      "address": "Odintsovo"
+    }
+  ]
+}
