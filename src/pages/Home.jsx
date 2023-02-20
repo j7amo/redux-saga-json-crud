@@ -9,7 +9,8 @@ import {
   MDBTooltip,
 } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
-import { loadUsersStart } from '../store/action-creators';
+import { toast } from 'react-toastify';
+import { deleteUserStart, loadUsersStart } from '../store/action-creators';
 
 function Home() {
   const dispatch = useDispatch();
@@ -20,7 +21,10 @@ function Home() {
   }, []);
 
   const handleDelete = (id) => {
-    console.log(id);
+    if (window.confirm('Are you sure you want to delete the user?')) {
+      dispatch(deleteUserStart(id));
+      toast('User deleted successfully');
+    }
   };
 
   return (
