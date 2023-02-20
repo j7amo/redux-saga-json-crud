@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-const loadUsersApi = () => axios.get('http://localhost:3333/users');
+export const loadUsersApi = () => axios.get('http://localhost:3333/users');
 
-export default loadUsersApi;
+export const createUserApi = (user) => axios.post('http://localhost:3333/users', user);

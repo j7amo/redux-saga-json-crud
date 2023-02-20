@@ -6,6 +6,8 @@ import {
   MDBValidationItem,
 } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createUserStart } from '../store/action-creators';
 
 const initialState = {
   name: '',
@@ -17,12 +19,18 @@ const initialState = {
 function AddEditUser() {
   const [formValue, setFormValue] = useState(initialState);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     address, name, email, phone,
   } = formValue;
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    if (address && name && email && phone) {
+      dispatch(createUserStart(formValue));
+      setTimeout(() => navigate('/'), 1000);
+    }
   };
 
   // This is how we can write a universal onChange handler
