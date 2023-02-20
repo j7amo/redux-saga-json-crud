@@ -7,6 +7,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { createUserStart } from '../store/action-creators';
 
 const initialState = {
@@ -29,6 +30,7 @@ function AddEditUser() {
 
     if (address && name && email && phone) {
       dispatch(createUserStart(formValue));
+      toast.success('User successfully created');
       setTimeout(() => navigate('/'), 1000);
     }
   };
