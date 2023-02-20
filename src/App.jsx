@@ -5,18 +5,21 @@ import About from './pages/About';
 import AddEditUser from './pages/AddEditUser';
 import UserInfo from './pages/UserInfo';
 import Header from './components/Header';
+import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/addUser" element={<AddEditUser />} />
-        <Route path="/editUser/:id" element={<AddEditUser />} />
-        <Route path="/userInfo/:id" element={<UserInfo />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/addUser" element={<AddEditUser />} />
+          <Route path="/editUser/:id" element={<AddEditUser />} />
+          <Route path="/userInfo/:id" element={<UserInfo />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }
