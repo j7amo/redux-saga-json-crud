@@ -11,6 +11,7 @@ import {
 import {
   CREATE_USER_START,
   DELETE_USER_START,
+  FILTER_USER_START,
   LOAD_USERS_START,
   SEARCH_USER_START,
   UPDATE_USER_START,
@@ -18,6 +19,7 @@ import {
 import {
   createUserApi,
   deleteUserApi,
+  filterUsersApi,
   loadUsersApi,
   searchUsersApi,
   updateUserApi,
@@ -27,6 +29,8 @@ import {
   createUserSuccess,
   deleteUserError,
   deleteUserSuccess,
+  filterUserError,
+  filterUserSuccess,
   loadUsersError,
   loadUsersSuccess,
   searchUserError,
@@ -100,6 +104,19 @@ function* onSearchUserStartAsync({ payload }) {
   }
 }
 
+function* onFilterUserStartAsync({ payload }) {
+  try {
+    const response = yield call(filterUsersApi, payload);
+
+    if (response.status === 200) {
+      yield delay(500);
+      yield put(filterUserSuccess(response.data));
+    }
+  } catch (err) {
+    yield put(filterUserError(err.response.data));
+  }
+}
+
 function* onLoadUsers() {
   yield takeEvery(LOAD_USERS_START, onLoadUsersStartAsync);
 }
@@ -123,12 +140,17 @@ function* onSearchUser() {
   yield takeLatest(SEARCH_USER_START, onSearchUserStartAsync);
 }
 
+function* onFilterUser() {
+  yield takeLatest(FILTER_USER_START, onFilterUserStartAsync);
+}
+
 const userSagas = [
   fork(onLoadUsers),
   fork(onCreateUser),
   fork(onDeleteUser),
   fork(onUpdateUser),
   fork(onSearchUser),
+  fork(onFilterUser),
 ];
 
 export default function* rootSaga() {

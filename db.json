@@ -5,42 +5,56 @@
       "name": "Vasya",
       "email": "vasya@gmail.com",
       "phone": "66666666666",
-      "address": "Mytishy"
+      "address": "Mytishy",
+      "status": "active"
     },
     {
       "id": 2,
       "name": "Petya",
       "email": "petya@gmail.com",
       "phone": "232938428763",
-      "address": "Dolgopa"
+      "address": "Dolgopa",
+      "status": "inactive"
     },
     {
       "id": 3,
       "name": "Jenya",
       "email": "jenya@gmail.com",
       "phone": "327643489837",
-      "address": "Odintsovo"
+      "address": "Odintsovo",
+      "status": "inactive"
     },
     {
       "name": "Vanya",
       "email": "vanya@gmail.com",
       "phone": "12736276",
       "address": "Uzbekistan",
-      "id": 4
+      "id": 4,
+      "status": "active"
     },
     {
       "name": "Kolya",
       "email": "kolya@gmail.com",
       "phone": "3832764",
       "address": "sadjskjf",
-      "id": 5
+      "id": 5,
+      "status": "inactive"
     },
     {
       "name": "Super Vasya",
       "email": "asdasd@sdfsjdkfh.com",
       "phone": "3456755432",
       "address": "desfgfjk",
-      "id": 6
+      "id": 6,
+      "status": "active"
+    },
+    {
+      "name": "test",
+      "email": "test@gmail.com",
+      "phone": "34544",
+      "address": "trtyuttr",
+      "status": "active",
+      "id": 7
     }
   ]
 }

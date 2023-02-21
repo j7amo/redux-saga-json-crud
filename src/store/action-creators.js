@@ -5,6 +5,9 @@ import {
   DELETE_USER_ERROR,
   DELETE_USER_START,
   DELETE_USER_SUCCESS,
+  FILTER_USER_ERROR,
+  FILTER_USER_START,
+  FILTER_USER_SUCCESS,
   LOAD_USERS_ERROR,
   LOAD_USERS_START,
   LOAD_USERS_SUCCESS,
@@ -85,5 +88,20 @@ export const searchUserSuccess = (users) => ({
 
 export const searchUserError = (err) => ({
   type: SEARCH_USER_ERROR,
+  payload: err,
+});
+
+export const filterUserStart = (query) => ({
+  type: FILTER_USER_START,
+  payload: query,
+});
+
+export const filterUserSuccess = (users) => ({
+  type: FILTER_USER_SUCCESS,
+  payload: users,
+});
+
+export const filterUserError = (err) => ({
+  type: FILTER_USER_ERROR,
   payload: err,
 });

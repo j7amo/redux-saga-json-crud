@@ -5,6 +5,9 @@ import {
   DELETE_USER_ERROR,
   DELETE_USER_START,
   DELETE_USER_SUCCESS,
+  FILTER_USER_ERROR,
+  FILTER_USER_START,
+  FILTER_USER_SUCCESS,
   LOAD_USERS_ERROR,
   LOAD_USERS_START,
   LOAD_USERS_SUCCESS,
@@ -30,12 +33,14 @@ const usersReducer = (state = initialState, action) => {
     case DELETE_USER_START:
     case UPDATE_USER_START:
     case SEARCH_USER_START:
+    case FILTER_USER_START:
       return {
         ...state,
         loading: true,
       };
     case LOAD_USERS_SUCCESS:
     case SEARCH_USER_SUCCESS:
+    case FILTER_USER_SUCCESS:
       return {
         ...state,
         users: action.payload,
@@ -63,6 +68,7 @@ const usersReducer = (state = initialState, action) => {
     case DELETE_USER_ERROR:
     case UPDATE_USER_ERROR:
     case SEARCH_USER_ERROR:
+    case FILTER_USER_ERROR:
       return {
         ...state,
         loading: false,

@@ -9,3 +9,5 @@ export const deleteUserApi = (userId) => axios.delete(`http://localhost:3333/use
 export const updateUserApi = (userId, userInfo) => axios.put(`http://localhost:3333/users/${userId}`, userInfo);
 
 export const searchUsersApi = (query) => axios.get(`http://localhost:3333/users?q=${query}`);
+
+export const filterUsersApi = (status) => axios.get(`http://localhost:3333/users?status=${status}`);

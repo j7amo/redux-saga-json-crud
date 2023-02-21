@@ -15,7 +15,19 @@ const initialState = {
   email: '',
   phone: '',
   address: '',
+  status: '',
 };
+
+const options = [
+  {
+    label: 'Active',
+    value: 'active',
+  },
+  {
+    label: 'Inactive',
+    value: 'inactive',
+  },
+];
 
 function AddEditUser() {
   const [formValue, setFormValue] = useState(initialState);
@@ -25,7 +37,7 @@ function AddEditUser() {
   const { id } = useParams();
   const { users } = useSelector((state) => state.data);
   const {
-    address, name, email, phone,
+    address, name, email, phone, status,
   } = formValue;
 
   // This useEffect is for populating user add/edit form
@@ -59,6 +71,10 @@ function AddEditUser() {
         setTimeout(() => navigate('/'), 1000);
       }
     }
+  };
+
+  const handleDropdownChange = (evt) => {
+    setFormValue({ ...formValue, status: evt.target.value });
   };
 
   // This is how we can write a universal onChange handler
@@ -129,6 +145,23 @@ function AddEditUser() {
             label="Address"
           />
         </MDBValidationItem>
+        <br />
+        <select
+          style={{ width: '100%', borderRadius: '4px', height: '35px' }}
+          onChange={handleDropdownChange}
+        >
+          <option>Please select status</option>
+          {options.map((item) => (
+            <option
+              key={item.value}
+              selected={item.value === status}
+              value={item.value}
+            >
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <br />
         <br />
         <div className="col-12">
           <MDBBtn style={{ marginRight: '10px' }} type="submit">
