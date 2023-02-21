@@ -8,6 +8,9 @@ import {
   LOAD_USERS_ERROR,
   LOAD_USERS_START,
   LOAD_USERS_SUCCESS,
+  UPDATE_USER_ERROR,
+  UPDATE_USER_START,
+  UPDATE_USER_SUCCESS,
 } from './action-types';
 
 export const loadUsersStart = () => ({
@@ -50,5 +53,19 @@ export const deleteUserSuccess = (userId) => ({
 
 export const deleteUserError = (err) => ({
   type: DELETE_USER_ERROR,
+  payload: err,
+});
+
+export const updateUserStart = (userInfo) => ({
+  type: UPDATE_USER_START,
+  payload: userInfo,
+});
+
+export const updateUserSuccess = () => ({
+  type: UPDATE_USER_SUCCESS,
+});
+
+export const updateUserError = (err) => ({
+  type: UPDATE_USER_ERROR,
   payload: err,
 });

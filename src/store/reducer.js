@@ -8,6 +8,9 @@ import {
   LOAD_USERS_ERROR,
   LOAD_USERS_START,
   LOAD_USERS_SUCCESS,
+  UPDATE_USER_ERROR,
+  UPDATE_USER_START,
+  UPDATE_USER_SUCCESS,
 } from './action-types';
 
 const initialState = {
@@ -22,6 +25,7 @@ const usersReducer = (state = initialState, action) => {
     case LOAD_USERS_START:
     case CREATE_USER_START:
     case DELETE_USER_START:
+    case UPDATE_USER_START:
       return {
         ...state,
         loading: true,
@@ -33,6 +37,7 @@ const usersReducer = (state = initialState, action) => {
         loading: false,
       };
     case CREATE_USER_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -48,10 +53,10 @@ const usersReducer = (state = initialState, action) => {
         loading: false,
       };
     }
-
     case CREATE_USER_ERROR:
     case LOAD_USERS_ERROR:
     case DELETE_USER_ERROR:
+    case UPDATE_USER_ERROR:
       return {
         ...state,
         loading: false,
