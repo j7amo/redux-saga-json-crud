@@ -13,7 +13,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { searchUserStart } from '../store/action-creators';
+import { loadUsersStart, searchUserStart } from '../store/action-creators';
 
 function Header() {
   const dispatch = useDispatch();
@@ -24,6 +24,11 @@ function Header() {
     evt.preventDefault();
     dispatch(searchUserStart(searchValue));
     setSearchValue('');
+  };
+
+  const handleReset = (evt) => {
+    evt.preventDefault();
+    dispatch(loadUsersStart());
   };
 
   return (
@@ -81,6 +86,13 @@ function Header() {
               Search
             </MDBBtn>
           </form>
+          <MDBBtn
+            color="info"
+            style={{ marginLeft: '4px' }}
+            onClick={handleReset}
+          >
+            Reset
+          </MDBBtn>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
