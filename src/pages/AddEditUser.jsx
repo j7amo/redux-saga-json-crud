@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MDBBtn,
   MDBInput,
   MDBValidation,
   MDBValidationItem,
 } from 'mdb-react-ui-kit';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createUserStart } from '../store/action-creators';
+import { createUserStart, updateUserStart } from '../store/action-creators';
 
 const initialState = {
   name: '',
@@ -19,19 +19,42 @@ const initialState = {
 
 function AddEditUser() {
   const [formValue, setFormValue] = useState(initialState);
+  const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const { users } = useSelector((state) => state.data);
   const {
     address, name, email, phone,
   } = formValue;
+
+  // This useEffect is for populating user add/edit form
+  // when we already have a user in the store
+  useEffect(() => {
+    if (id) {
+      setEditMode(true);
+      const user = users.find((item) => item.id === Number(id));
+
+      if (user) {
+        setFormValue(user);
+      }
+    }
+  }, [id]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     if (address && name && email && phone) {
-      dispatch(createUserStart(formValue));
-      toast.success('User successfully created');
-      setTimeout(() => navigate('/'), 1000);
+      if (!editMode) {
+        dispatch(createUserStart(formValue));
+        toast.success('User successfully created');
+        setTimeout(() => navigate('/'), 1000);
+      } else {
+        dispatch(updateUserStart({ userId: id, userInfo: formValue }));
+        setEditMode(false);
+        toast.success('User successfully updated');
+        setTimeout(() => navigate('/'), 1000);
+      }
     }
   };
 
@@ -49,7 +72,9 @@ function AddEditUser() {
       noValidate
       onSubmit={handleSubmit}
     >
-      <p className="fs-2 fw-bold">Add Edit User</p>
+      <p className="fs-2 fw-bold">
+        {editMode ? 'Update User Details' : 'Add User Details'}
+      </p>
       <div
         style={{
           margin: 'auto',
@@ -104,7 +129,7 @@ function AddEditUser() {
         <br />
         <div className="col-12">
           <MDBBtn style={{ marginRight: '10px' }} type="submit">
-            Add
+            {editMode ? 'Update' : 'Add'}
           </MDBBtn>
           <MDBBtn
             style={{ marginRight: '10px' }}
