@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   MDBBtn,
   MDBIcon,
+  MDBSpinner,
   MDBTable,
   MDBTableBody,
   MDBTableHead,
@@ -14,7 +15,13 @@ import { deleteUserStart, loadUsersStart } from '../store/action-creators';
 
 function Home() {
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.data);
+  const { users, loading, error } = useSelector((state) => state.data);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   useEffect(() => {
     dispatch(loadUsersStart());
@@ -26,6 +33,14 @@ function Home() {
       toast('User deleted successfully');
     }
   };
+
+  if (loading) {
+    return (
+      <MDBSpinner style={{ marginTop: '150px' }} role="status">
+        <span className="visually-hidden">Loading...</span>
+      </MDBSpinner>
+    );
+  }
 
   return (
     <div className="container" style={{ marginTop: '150px' }}>
