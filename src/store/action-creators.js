@@ -14,6 +14,9 @@ import {
   SEARCH_USER_ERROR,
   SEARCH_USER_START,
   SEARCH_USER_SUCCESS,
+  SORT_USER_ERROR,
+  SORT_USER_START,
+  SORT_USER_SUCCESS,
   UPDATE_USER_ERROR,
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
@@ -103,5 +106,20 @@ export const filterUserSuccess = (users) => ({
 
 export const filterUserError = (err) => ({
   type: FILTER_USER_ERROR,
+  payload: err,
+});
+
+export const sortUserStart = (query) => ({
+  type: SORT_USER_START,
+  payload: query,
+});
+
+export const sortUserSuccess = (users) => ({
+  type: SORT_USER_SUCCESS,
+  payload: users,
+});
+
+export const sortUserError = (err) => ({
+  type: SORT_USER_ERROR,
   payload: err,
 });

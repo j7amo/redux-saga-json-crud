@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   MDBBtn,
@@ -19,11 +19,15 @@ import {
   deleteUserStart,
   filterUserStart,
   loadUsersStart,
+  sortUserStart,
 } from '../store/action-creators';
 
 function Home() {
   const dispatch = useDispatch();
   const { users, loading, error } = useSelector((state) => state.data);
+  const [sortValue, setSortValue] = useState();
+
+  const sortOptions = ['Name', 'Email', 'Phone', 'Address', 'Status'];
 
   useEffect(() => {
     if (error) {
@@ -44,6 +48,16 @@ function Home() {
 
   const handleFilterChange = (value) => {
     dispatch(filterUserStart(value));
+  };
+
+  const handleSortChange = (evt) => {
+    const { value } = evt.target;
+    const sortOptionsLowerCase = sortOptions.map((option) => option.toLowerCase());
+
+    if (sortOptionsLowerCase.includes(value)) {
+      dispatch(sortUserStart(value));
+    }
+    setSortValue(value);
   };
 
   if (loading) {
@@ -124,6 +138,22 @@ function Home() {
       <MDBRow>
         <MDBCol size="8">
           <h5>Sort By:</h5>
+          <select
+            style={{ width: '50%', borderRadius: '2px', height: '35px' }}
+            value={sortValue}
+            onChange={handleSortChange}
+          >
+            <option>Please select sort value</option>
+            {sortOptions.map((item) => (
+              <option
+                key={item}
+                selected={item === sortValue}
+                value={item.toLowerCase()}
+              >
+                {item}
+              </option>
+            ))}
+          </select>
         </MDBCol>
         <MDBCol size="4">
           <h5>Filter By Status:</h5>

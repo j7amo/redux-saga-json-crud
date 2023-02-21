@@ -11,3 +11,5 @@ export const updateUserApi = (userId, userInfo) => axios.put(`http://localhost:3
 export const searchUsersApi = (query) => axios.get(`http://localhost:3333/users?q=${query}`);
 
 export const filterUsersApi = (status) => axios.get(`http://localhost:3333/users?status=${status}`);
+
+export const sortUsersApi = (column) => axios.get(`http://localhost:3333/users?_sort=${column}&_order=asc`);

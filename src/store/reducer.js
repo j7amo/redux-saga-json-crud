@@ -14,6 +14,9 @@ import {
   SEARCH_USER_ERROR,
   SEARCH_USER_START,
   SEARCH_USER_SUCCESS,
+  SORT_USER_ERROR,
+  SORT_USER_START,
+  SORT_USER_SUCCESS,
   UPDATE_USER_ERROR,
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
@@ -34,6 +37,7 @@ const usersReducer = (state = initialState, action) => {
     case UPDATE_USER_START:
     case SEARCH_USER_START:
     case FILTER_USER_START:
+    case SORT_USER_START:
       return {
         ...state,
         loading: true,
@@ -41,6 +45,7 @@ const usersReducer = (state = initialState, action) => {
     case LOAD_USERS_SUCCESS:
     case SEARCH_USER_SUCCESS:
     case FILTER_USER_SUCCESS:
+    case SORT_USER_SUCCESS:
       return {
         ...state,
         users: action.payload,
@@ -69,6 +74,7 @@ const usersReducer = (state = initialState, action) => {
     case UPDATE_USER_ERROR:
     case SEARCH_USER_ERROR:
     case FILTER_USER_ERROR:
+    case SORT_USER_ERROR:
       return {
         ...state,
         loading: false,
