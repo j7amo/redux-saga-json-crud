@@ -38,6 +38,9 @@ function AddEditUser() {
       if (user) {
         setFormValue(user);
       }
+    } else {
+      setEditMode(false);
+      setFormValue(initialState);
     }
   }, [id]);
 
