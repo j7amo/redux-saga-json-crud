@@ -26,6 +26,9 @@ const initialState = {
   users: [],
   loading: false,
   error: null,
+  pageLimit: 4,
+  currentPage: 0,
+  paginationMode: true,
 };
 
 // eslint-disable-next-line default-param-last
@@ -43,6 +46,16 @@ const usersReducer = (state = initialState, action) => {
         loading: true,
       };
     case LOAD_USERS_SUCCESS:
+      return {
+        ...state,
+        users: action.payload.users,
+        loading: false,
+        currentPage:
+          action.payload.currentPageIncrement !== 0
+            ? state.currentPage + action.payload.currentPageIncrement
+            : 0,
+        paginationMode: true,
+      };
     case SEARCH_USER_SUCCESS:
     case FILTER_USER_SUCCESS:
     case SORT_USER_SUCCESS:
@@ -50,24 +63,16 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         users: action.payload,
         loading: false,
+        paginationMode: false,
       };
     case CREATE_USER_SUCCESS:
     case UPDATE_USER_SUCCESS:
+    case DELETE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
+        currentPage: 0,
       };
-    case DELETE_USER_SUCCESS: {
-      const updatedUsers = state.users.filter(
-        (user) => user.id !== action.payload,
-      );
-
-      return {
-        ...state,
-        users: updatedUsers,
-        loading: false,
-      };
-    }
     case CREATE_USER_ERROR:
     case LOAD_USERS_ERROR:
     case DELETE_USER_ERROR:

@@ -22,8 +22,9 @@ import {
   UPDATE_USER_SUCCESS,
 } from './action-types';
 
-export const loadUsersStart = () => ({
+export const loadUsersStart = (pageInfo) => ({
   type: LOAD_USERS_START,
+  payload: pageInfo,
 });
 
 export const loadUsersSuccess = (users) => ({

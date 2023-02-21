@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const loadUsersApi = () => axios.get('http://localhost:3333/users');
+export const loadUsersApi = (start, end) => axios.get(`http://localhost:3333/users?_start=${start}&_end=${end}`);
 
 export const createUserApi = (user) => axios.post('http://localhost:3333/users', user);
 

@@ -6,6 +6,9 @@ import {
   MDBCol,
   MDBContainer,
   MDBIcon,
+  MDBPagination,
+  MDBPaginationItem,
+  MDBPaginationLink,
   MDBRow,
   MDBSpinner,
   MDBTable,
@@ -24,7 +27,9 @@ import {
 
 function Home() {
   const dispatch = useDispatch();
-  const { users, loading, error } = useSelector((state) => state.data);
+  const {
+    users, loading, error, pageLimit, currentPage, paginationMode,
+  } = useSelector((state) => state.data);
   const [sortValue, setSortValue] = useState();
 
   const sortOptions = ['Name', 'Email', 'Phone', 'Address', 'Status'];
@@ -36,13 +41,19 @@ function Home() {
   }, [error]);
 
   useEffect(() => {
-    dispatch(loadUsersStart());
+    dispatch(loadUsersStart({ start: 0, end: 4, currentPageIncrement: 0 }));
   }, []);
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete the user?')) {
       dispatch(deleteUserStart(id));
       toast('User deleted successfully');
+      setTimeout(
+        () => dispatch(
+          loadUsersStart({ start: 0, end: 4, currentPageIncrement: 0 }),
+        ),
+        200,
+      );
     }
   };
 
@@ -67,6 +78,84 @@ function Home() {
       </MDBSpinner>
     );
   }
+
+  const renderPagination = () => {
+    if (currentPage === 0) {
+      return (
+        <MDBPagination className="mb-0">
+          <MDBPaginationItem>
+            <MDBPaginationLink>1</MDBPaginationLink>
+          </MDBPaginationItem>
+          <MDBPaginationItem>
+            <MDBBtn
+              onClick={() => dispatch(
+                loadUsersStart({ start: 4, end: 8, currentPageIncrement: 1 }),
+              )}
+            >
+              Next
+            </MDBBtn>
+          </MDBPaginationItem>
+        </MDBPagination>
+      );
+    }
+
+    if (currentPage < pageLimit - 1 && users.length === pageLimit) {
+      return (
+        <MDBPagination className="mb-0">
+          <MDBPaginationItem>
+            <MDBBtn
+              onClick={() => dispatch(
+                loadUsersStart({
+                  start: (currentPage - 1) * 4,
+                  end: currentPage * 4,
+                  currentPageIncrement: -1,
+                }),
+              )}
+            >
+              Prev
+            </MDBBtn>
+          </MDBPaginationItem>
+          <MDBPaginationItem>
+            <MDBPaginationLink>{currentPage + 1}</MDBPaginationLink>
+          </MDBPaginationItem>
+          <MDBPaginationItem>
+            <MDBBtn
+              onClick={() => dispatch(
+                loadUsersStart({
+                  start: (currentPage + 1) * 4,
+                  end: (currentPage + 2) * 4,
+                  currentPageIncrement: 1,
+                }),
+              )}
+            >
+              Next
+            </MDBBtn>
+          </MDBPaginationItem>
+        </MDBPagination>
+      );
+    }
+
+    return (
+      <MDBPagination className="mb-0">
+        <MDBPaginationItem>
+          <MDBBtn
+            onClick={() => dispatch(
+              loadUsersStart({
+                start: (currentPage - 1) * 4,
+                end: currentPage * 4,
+                currentPageIncrement: -1,
+              }),
+            )}
+          >
+            Prev
+          </MDBBtn>
+        </MDBPaginationItem>
+        <MDBPaginationItem>
+          <MDBPaginationLink>{currentPage + 1}</MDBPaginationLink>
+        </MDBPaginationItem>
+      </MDBPagination>
+    );
+  };
 
   return (
     <MDBContainer>
@@ -134,6 +223,18 @@ function Home() {
               </MDBTableBody>
             ))}
         </MDBTable>
+        {paginationMode ? (
+          <div
+            style={{
+              margin: 'auto',
+              padding: '15px',
+              maxWidth: '200px',
+              alignContent: 'center',
+            }}
+          >
+            {renderPagination()}
+          </div>
+        ) : null}
       </div>
       <MDBRow>
         <MDBCol size="8">

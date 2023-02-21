@@ -28,7 +28,7 @@ function Header() {
 
   const handleReset = (evt) => {
     evt.preventDefault();
-    dispatch(loadUsersStart());
+    dispatch(loadUsersStart({ start: 0, end: 4, currentPageIncrement: 0 }));
   };
 
   return (
