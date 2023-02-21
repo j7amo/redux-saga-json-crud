@@ -1,4 +1,3 @@
-// take, takeEvery, takeLatest, put, all, delay, fork, call
 import {
   all,
   call,
@@ -49,7 +48,7 @@ function* onCreateUserStartAsync(action) {
   try {
     const response = yield call(createUserApi, action.payload);
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       yield delay(500);
       yield put(createUserSuccess());
     }
