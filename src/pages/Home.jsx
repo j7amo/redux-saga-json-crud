@@ -172,8 +172,16 @@ function Home() {
               <th scope="col">Action</th>
             </tr>
           </MDBTableHead>
-          {users
-            && users.map((user, index) => (
+          {users.length === 0 ? (
+            <MDBTableBody className="align-items-center mb-0">
+              <tr>
+                <td colSpan={8} className="text-center mb-0">
+                  No Data Found
+                </td>
+              </tr>
+            </MDBTableBody>
+          ) : (
+            users.map((user, index) => (
               <MDBTableBody key={user.email}>
                 <tr>
                   <th scope="row">{index + 1}</th>
@@ -221,7 +229,8 @@ function Home() {
                   </td>
                 </tr>
               </MDBTableBody>
-            ))}
+            ))
+          )}
         </MDBTable>
         {paginationMode ? (
           <div
@@ -236,45 +245,47 @@ function Home() {
           </div>
         ) : null}
       </div>
-      <MDBRow>
-        <MDBCol size="8">
-          <h5>Sort By:</h5>
-          <select
-            style={{ width: '50%', borderRadius: '2px', height: '35px' }}
-            value={sortValue}
-            onChange={handleSortChange}
-          >
-            <option>Please select sort value</option>
-            {sortOptions.map((item) => (
-              <option
-                key={item}
-                selected={item === sortValue}
-                value={item.toLowerCase()}
+      {users.length > 0 ? (
+        <MDBRow>
+          <MDBCol size="8">
+            <h5>Sort By:</h5>
+            <select
+              style={{ width: '50%', borderRadius: '2px', height: '35px' }}
+              value={sortValue}
+              onChange={handleSortChange}
+            >
+              <option>Please select sort value</option>
+              {sortOptions.map((item) => (
+                <option
+                  key={item}
+                  selected={item === sortValue}
+                  value={item.toLowerCase()}
+                >
+                  {item}
+                </option>
+              ))}
+            </select>
+          </MDBCol>
+          <MDBCol size="4">
+            <h5>Filter By Status:</h5>
+            <MDBBtnGroup>
+              <MDBBtn
+                color="success"
+                onClick={() => handleFilterChange('active')}
               >
-                {item}
-              </option>
-            ))}
-          </select>
-        </MDBCol>
-        <MDBCol size="4">
-          <h5>Filter By Status:</h5>
-          <MDBBtnGroup>
-            <MDBBtn
-              color="success"
-              onClick={() => handleFilterChange('active')}
-            >
-              Active
-            </MDBBtn>
-            <MDBBtn
-              color="danger"
-              onClick={() => handleFilterChange('inactive')}
-              style={{ marginLeft: '2px' }}
-            >
-              Inactive
-            </MDBBtn>
-          </MDBBtnGroup>
-        </MDBCol>
-      </MDBRow>
+                Active
+              </MDBBtn>
+              <MDBBtn
+                color="danger"
+                onClick={() => handleFilterChange('inactive')}
+                style={{ marginLeft: '2px' }}
+              >
+                Inactive
+              </MDBBtn>
+            </MDBBtnGroup>
+          </MDBCol>
+        </MDBRow>
+      ) : null}
     </MDBContainer>
   );
 }
