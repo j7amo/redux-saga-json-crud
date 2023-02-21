@@ -8,6 +8,9 @@ import {
   LOAD_USERS_ERROR,
   LOAD_USERS_START,
   LOAD_USERS_SUCCESS,
+  SEARCH_USER_ERROR,
+  SEARCH_USER_START,
+  SEARCH_USER_SUCCESS,
   UPDATE_USER_ERROR,
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
@@ -67,5 +70,20 @@ export const updateUserSuccess = () => ({
 
 export const updateUserError = (err) => ({
   type: UPDATE_USER_ERROR,
+  payload: err,
+});
+
+export const searchUserStart = (query) => ({
+  type: SEARCH_USER_START,
+  payload: query,
+});
+
+export const searchUserSuccess = (users) => ({
+  type: SEARCH_USER_SUCCESS,
+  payload: users,
+});
+
+export const searchUserError = (err) => ({
+  type: SEARCH_USER_ERROR,
   payload: err,
 });

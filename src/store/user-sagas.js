@@ -12,12 +12,14 @@ import {
   CREATE_USER_START,
   DELETE_USER_START,
   LOAD_USERS_START,
+  SEARCH_USER_START,
   UPDATE_USER_START,
 } from './action-types';
 import {
   createUserApi,
   deleteUserApi,
   loadUsersApi,
+  searchUsersApi,
   updateUserApi,
 } from './api';
 import {
@@ -27,6 +29,8 @@ import {
   deleteUserSuccess,
   loadUsersError,
   loadUsersSuccess,
+  searchUserError,
+  searchUserSuccess,
   updateUserError,
   updateUserSuccess,
 } from './action-creators';
@@ -83,6 +87,19 @@ function* onUpdateUserStartAsync({ payload: { userId, userInfo } }) {
   }
 }
 
+function* onSearchUserStartAsync({ payload }) {
+  try {
+    const response = yield call(searchUsersApi, payload);
+
+    if (response.status === 200) {
+      yield delay(500);
+      yield put(searchUserSuccess(response.data));
+    }
+  } catch (err) {
+    yield put(searchUserError(err.response.data));
+  }
+}
+
 function* onLoadUsers() {
   yield takeEvery(LOAD_USERS_START, onLoadUsersStartAsync);
 }
@@ -102,11 +119,16 @@ function* onUpdateUser() {
   yield takeLatest(UPDATE_USER_START, onUpdateUserStartAsync);
 }
 
+function* onSearchUser() {
+  yield takeLatest(SEARCH_USER_START, onSearchUserStartAsync);
+}
+
 const userSagas = [
   fork(onLoadUsers),
   fork(onCreateUser),
   fork(onDeleteUser),
   fork(onUpdateUser),
+  fork(onSearchUser),
 ];
 
 export default function* rootSaga() {

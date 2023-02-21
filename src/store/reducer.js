@@ -8,6 +8,9 @@ import {
   LOAD_USERS_ERROR,
   LOAD_USERS_START,
   LOAD_USERS_SUCCESS,
+  SEARCH_USER_ERROR,
+  SEARCH_USER_START,
+  SEARCH_USER_SUCCESS,
   UPDATE_USER_ERROR,
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
@@ -26,11 +29,13 @@ const usersReducer = (state = initialState, action) => {
     case CREATE_USER_START:
     case DELETE_USER_START:
     case UPDATE_USER_START:
+    case SEARCH_USER_START:
       return {
         ...state,
         loading: true,
       };
     case LOAD_USERS_SUCCESS:
+    case SEARCH_USER_SUCCESS:
       return {
         ...state,
         users: action.payload,
@@ -57,6 +62,7 @@ const usersReducer = (state = initialState, action) => {
     case LOAD_USERS_ERROR:
     case DELETE_USER_ERROR:
     case UPDATE_USER_ERROR:
+    case SEARCH_USER_ERROR:
       return {
         ...state,
         loading: false,
