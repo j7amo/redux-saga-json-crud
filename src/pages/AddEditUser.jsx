@@ -32,6 +32,7 @@ const options = [
 function AddEditUser() {
   const [formValue, setFormValue] = useState(initialState);
   const [editMode, setEditMode] = useState(false);
+  const [statusErrorMessage, setStatusErrorMessage] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -59,7 +60,11 @@ function AddEditUser() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    if (address && name && email && phone) {
+    if (!status) {
+      setStatusErrorMessage('Please provide status');
+    }
+
+    if (address && name && email && phone && status) {
       if (!editMode) {
         dispatch(createUserStart(formValue));
         toast.success('User successfully created');
@@ -74,6 +79,7 @@ function AddEditUser() {
   };
 
   const handleDropdownChange = (evt) => {
+    setStatusErrorMessage(null);
     setFormValue({ ...formValue, status: evt.target.value });
   };
 
@@ -147,7 +153,12 @@ function AddEditUser() {
         </MDBValidationItem>
         <br />
         <select
-          style={{ width: '100%', borderRadius: '4px', height: '35px' }}
+          style={{
+            width: '100%',
+            borderRadius: '4px',
+            height: '35px',
+            borderColor: '#83ccc5',
+          }}
           onChange={handleDropdownChange}
         >
           <option>Please select status</option>
@@ -161,6 +172,11 @@ function AddEditUser() {
             </option>
           ))}
         </select>
+        {statusErrorMessage && (
+          <div style={{ color: 'red', textAlign: 'left', fontSize: '14px' }}>
+            {statusErrorMessage}
+          </div>
+        )}
         <br />
         <br />
         <div className="col-12">
